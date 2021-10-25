@@ -22,7 +22,7 @@ public class TestMain {
 
         //add 검증
         User user = new User();
-        user.setId("1");
+        user.setId("5");
         user.setName("고윤석");
         user.setPassword("hi");
 
@@ -35,10 +35,17 @@ public class TestMain {
         //get 검증
         User user2 = dao.get(user.getId());
 
-        log.info("유저 이름={}",user2.getName());
-        log.info("유저 비밀번호={}",user2.getPassword());
+        if (!user.getName().equals(user2.getName())) {
+            System.out.println("아이디 테스트 실패");
+        } else if (!user.getPassword().equals(user2.getPassword())) {
+            System.out.println("아이디 테스트 성공");
+            System.out.println("비밀번호 테스트 실패");
+        } else {
+            System.out.println("전체 테스트 성공");
+        }
 
-        log.info("조회 성공={}",user2.getId());
+
+
 
     }
 }

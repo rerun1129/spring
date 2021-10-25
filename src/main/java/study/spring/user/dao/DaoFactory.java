@@ -19,4 +19,9 @@ public class DaoFactory {
     public ConnectionMaker connectionMaker() {
         return new DConnectionMaker();
     }
+
+    /*@Bean
+    public JdbcContext jdbcContext() {
+        return new JdbcContext(connectionMaker());
+    }*/
 }
