@@ -39,11 +39,14 @@ public class UserDAO {
 
     public void add(final User user) throws ClassNotFoundException, SQLException {
         StatementStrategy strategy = c -> {
-            PreparedStatement ps = c.prepareStatement("insert into users(id,name,password) values (?, ?, ?)");
+            PreparedStatement ps = c.prepareStatement("insert into users(id,name,password,level,login,recommend) values (?, ?, ?, ?, ?, ?)");
 
             ps.setString(1, user.getId());
             ps.setString(2, user.getName());
             ps.setString(3, user.getPassword());
+            ps.setInt(4, user.getLevel().initValue());
+            ps.setInt(5, user.getLogin());
+            ps.setInt(6,user.getRecommend());
 
             return ps;
         };
@@ -68,6 +71,9 @@ public class UserDAO {
         user.setId(rs.getString("id"));
         user.setName(rs.getString("name"));
         user.setPassword(rs.getString("password"));
+        user.setLevel(Level.valueOf(rs.getInt("level")));
+        user.setLogin(rs.getInt("login"));
+        user.setRecommend(rs.getInt("recommend"));
 
         rs.close();
         ps.close();
@@ -123,6 +129,23 @@ public class UserDAO {
             }
         }
         return count;
+    }
+
+    public void update(User user) {
+        StatementStrategy strategy = c -> {
+            PreparedStatement ps = c.prepareStatement("update users set name = ?, password = ?, level = ?, login = ?, recommend = ? where id = ? ");
+
+            ps.setString(1, user.getName());
+            ps.setString(2, user.getPassword());
+            ps.setInt(3, user.getLevel().initValue());
+            ps.setInt(4, user.getLogin());
+            ps.setInt(5,user.getRecommend());
+            ps.setString(6, user.getId());
+
+            return ps;
+        };
+        this.jdbcContext.workWithStatementStrategy(strategy);       //workWithStatementStrategy 이 템플릿이고 strategy 가 콜백의 역할을 한다. 콜백 메서드는 호출되어 참조변수에 값을 담아주고 담긴 값을 템플릿에 전달한다.
+        //매개변수에 메서드를 담아줄수 있기에 이를 함수형 인터페이스라고 하기도 하며 보통 자바스크립트와 같은 프론트 언어에서 하는 것처럼 메서드를 변수 하나에 담을 수 있게 해준다.
     }
 
 

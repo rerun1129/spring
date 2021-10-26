@@ -1,12 +1,15 @@
 package study.spring.user;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import study.spring.user.dao.ConnectionMaker;
 import study.spring.user.dao.DConnectionMaker;
 import study.spring.user.dao.DaoFactory;
 import study.spring.user.dao.UserDAO;
 import study.spring.user.domain.User;
 
+import javax.sql.DataSource;
 import java.sql.SQLException;
 
 
@@ -14,6 +17,8 @@ import java.sql.SQLException;
 public class TestMain {
 
     public static void main(String[] args) throws SQLException, ClassNotFoundException {
+
+
 
 
         //커넥션을 받아서 사용(근데 지금까지 무슨일이 있었는지는 모름. 그냥 씀)
